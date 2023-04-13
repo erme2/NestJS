@@ -2,6 +2,9 @@
 
 ## [Gli script](./struttura/script.md)
 
-## [Files]()
+## [Files](./struttura/files.md)
 
+## [Sintassi](./struttura/sintassi.md)
+
+---
 [Home](./../README.md)
