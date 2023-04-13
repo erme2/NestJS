@@ -4,6 +4,8 @@ Queste due parti insieme ci consentono di creare una pagina html che descrive il
 
 Nella fattispecie esiste una libreria specifica per generare un sito swagger da un nostro progetto NestJS.
 
+La documentazione completa su come usare questi decorators la trovi [qui](https://docs.nestjs.com/openapi/operations).
+
 ## Installazione
 Per prima cosa installiamo il pacchetto usando `npm`
 ```bash
@@ -36,5 +38,103 @@ Poiché non ho nessun controller sulla main root (/), ho configurato swagger per
 ## Sezioni
 Per una migliore comprensione della documentazione potremmo voler migliorare la documentazione. Potremmo voler aggiungere delle sezioni ad esempio e per farlo basta aprire uno dei controller interessati ed aggiungere un decorator:
 ```typescript
+@ApiTags('Users')
+```
+E il sito swagger verrà ricompilato usando le sezioni indicate con questo decorator.
 
+## Properties
+
+Poiché il controller Users usa un DTO per controllare che il body sia corretto, possiamo usare un altro decorator per aggiungere qualche informazione alla documentazione generata da swagger
+
+```typescript
+import { ApiProperty } from "@nestjs/swagger";
+
+export class CreateUserDto {
+  @ApiProperty()
+  name: string;
+  @ApiProperty({ required: false, default: 10 })
+  age?: number;
+}
+```
+Possiamo passare al decorator anche altre proprietà per ogni campo.
+
+## Query
+Abbiamo appena aggiunto un parametro opzionale ad un endpoint:
+```typescript
+  @ApiOkResponse({ type: User, isArray: true })
+  @Get()
+  // tutti gli utenti
+  getUsers(@Query('name') queryName: string): User[] {
+    return this.userService.findAll(queryName);
+  }
+```
+In swagger verrà evidenziato come required di default. Per ovviare a questo problema possiamo usare il decorator `@ApiQuery`:
+```typescript
+  @ApiOkResponse({ type: User, isArray: true })
+  @Apu
+  @Get()
+  // tutti gli utenti
+  getUsers(@Query('name') queryName: string): User[] {
+    return this.userService.findAll(queryName);
+  }
+```
+## Responses
+Ci sono decine di tipi di risposte documentate, trovi l'elenco completo [qui](https://docs.nestjs.com/openapi/operations#responses). Queste sotto sono le principali.
+
+### 200 - Ok
+Per il 90% degli ] altri endpoint possiamo usare `@ApiOkResponse`
+```typescript
+  @ApiOkResponse({ type: User, isArray: true })
+  @Get()
+  // tutti gli utenti
+  getUsers(): User[] {
+    return this.userService.findAll();
+  }
+
+  // utente: id
+  @ApiOkResponse({ type: User })
+  @Get(':id')
+  getUserById(@Param('id') idVar: number): User {
+    return this.userService.findById(idVar);
+  }
+```
+
+
+### 201 - Created
+É a nostra disposizione anche un altro decorator `@ApiCreatedResponse`.
+
+```typescript
+  @ApiCreatedResponse({ type: User })
+  @Post()
+  newUser(@Body() requestBody: CreateUserDto): User {
+    return this.userService.createUser(requestBody.name);
+  }
+```
+Perché funzioni correttamente dovremo anche aggiungere i decorator `@ApiProperty` alla entity connessa.
+
+```typescript
+import { ApiProperty } from "@nestjs/swagger";
+
+export class User {
+  @ApiProperty()
+  id: number;
+  @ApiProperty()
+  name: string;
+}
+```
+
+### 404 - Not found
+Nel caso in cui il nostro codice prevede di restituire una NotFoundException in qualche specifico caso, basterà aggiungere il decorator `@ApiNotFoundResponse` perché questa possibilità venga documentata in swagger.
+
+```typescript
+  @ApiOkResponse({ type: User })
+  @ApiNotFoundResponse()
+  @Get(':id')
+  getUserById(@Param('id') idVar: number): User {
+    const response = this.userService.findById(idVar);
+    if (response) {
+      return response;
+    }
+    throw new NotFoundException();
+  }
 ```

@@ -1,3 +1,8 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { IsAlphanumeric } from 'class-validator';
+
 export class CreateUserDto {
-  name: string;
+    @ApiProperty()
+    @IsAlphanumeric()
+    name: string;
 }

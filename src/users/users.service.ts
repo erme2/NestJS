@@ -3,12 +3,15 @@ import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
-  private users: User[] = [
-    { id: 1, name: 'erme2' },
-    { id: 2, name: 'test123' },
-  ];
+    private users: User[] = [
+      { id: 1, name: 'erme2' },
+      { id: 2, name: 'test123' },
+    ];
 
-  findAll(): User[] {
+  findAll(queryName?: string): User[] {
+    if (queryName) {
+      console.log(queryName);
+    }
     return this.users;
   }
 

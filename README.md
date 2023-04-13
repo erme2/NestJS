@@ -321,6 +321,7 @@ export class UsersService {
 
 ## REFS
 - ### [CLI (command line interface)](./md/cli.md)
+- ### [Errors](./md/errors.md)
 - ### [Struttura](./md/struttura.md)
 - ### [Swagger](./md/swagger.md)
  
