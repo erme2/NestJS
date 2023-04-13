@@ -279,9 +279,9 @@ export class UsersService {
   }
 }
 ```
-Service Aggiornato:
 
-```typescript```
+Service Aggiornato:
+```typescript
 import { Injectable } from '@nestjs/common';
 import { User } from './entities/user.entity';
 
@@ -322,5 +322,6 @@ export class UsersService {
 ## REFS
 - ### [CLI (command line interface)](./md/cli.md)
 - ### [Struttura](./md/struttura.md)
+- ### [Swagger](./md/swagger.md)
  
 
