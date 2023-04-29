@@ -66,3 +66,17 @@ async function bootstrap() {
 ```
 
 Troverete l'elenco di tutti i decorators e le istruzioni per utilizzarli al meglio nella documentazione dei pacchetti stessi.
+
+Altro esempio di DTO
+```typescript
+import { ApiProperty } from '@nestjs/swagger';
+import { IsAlphanumeric, MaxLength, MinLength } from 'class-validator';
+
+export class CreateUserDto {
+    @ApiProperty({ minLength: 5, maxLength: 10 })
+    @IsAlphanumeric()
+    @MinLength(5)
+    @MaxLength(10)
+    name: string;
+}
+```

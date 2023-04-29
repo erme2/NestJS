@@ -1,8 +1,39 @@
 # Costrutti di sintassi cui prestare attenzione
 
 ## Decorators
-I decorators sono funzioni che si possono importare in altri oggetti
+I decorators sono funzioni che accettano tre argomenti: il target (la classe o il membro della classe a cui il decorator viene applicato), il nome del membro (se il decorator viene applicato a un membro della classe) e un descrittore (che contiene informazioni sul membro, come il tipo di dati, l'accessibilità, ecc.).
 
+I decorators possono essere usati per diverse finalità, come la validazione dei dati, il logging, l'iniezione di dipendenze, la serializzazione/deserializzazione degli oggetti, ecc.
+
+Ad esempio, si potrebbe utilizzare un decorator per loggare l'invocazione di un metodo della classe:
+
+```typescript
+
+function log(target: any, name: string, descriptor: PropertyDescriptor) {
+  const originalMethod = descriptor.value;
+  descriptor.value = function(...args: any[]) {
+    console.log(`Calling ${name} with arguments: ${args}`);
+    return originalMethod.apply(this, args);
+  }
+  return descriptor;
+}
+
+class MyClass {
+  @log
+  myMethod(arg1: string, arg2: number) {
+    console.log(`Executing myMethod with ${arg1} and ${arg2}`);
+  }
+}
+
+const myObj = new MyClass();
+myObj.myMethod('hello', 42); // Output: 
+// Calling myMethod with arguments: hello,42
+// Executing myMethod with hello and 42
+```
+
+In questo esempio, il decorator log viene applicato al metodo myMethod della classe MyClass. Il decorator crea una nuova funzione che sostituisce il metodo originale e viene eseguita prima del metodo originale, registrando l'invocazione del metodo e gli argomenti passati. Il decorator restituisce il descrittore modificato per sostituire il metodo originale nella classe.
+
+I decorators sono molto utili per aggiungere funzionalità ai membri delle classi in modo modulare e flessibile. Tuttavia, è importante utilizzarli con attenzione per non appesantire eccessivamente il codice e mantenere la leggibilità e la manutenibilità del codice.
 
 ### @Controller()
 Accetta un parametro string che rappresenta l'url di cui si occuperà
@@ -17,7 +48,6 @@ export class AppController {
 export class TestController {
   constructor(private readonly testService: TestService) {}
 ```
-
 ### @Method() (get/post/delete/put/all ...)
 
 Accetta un parametro stringa e all'interno di un controller si occuperà di tutte le richieste per il metodo specificato e l'url specificata
@@ -40,7 +70,6 @@ export class AppController {
   }
 }
 ```
-
 ### @Param()
 Usato all'intenno di un @Method ci permette di estrarre un param dalla request.
 Possiamo dare al parametro estratto un nome di variabile e un tipo*:
@@ -65,7 +94,6 @@ Body rappresenta il body della request, e può essere usato per trasferire il co
   }
 }
 ```
-
 ### @Query()
 Questo decorator serve a leggere i parametri espressi all'interno dell'url.
 Ad esempio chiamando questo endpoint: `/users?name=bob`.

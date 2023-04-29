@@ -1,6 +1,13 @@
 # NestJS
 Appunti su NestJS
 
+## REFS
+- ### [CLI (command line interface)](./md/cli.md)
+- ### [Errors](./md/errors.md)
+- ### [Struttura](./md/struttura.md)
+- ### [Swagger](./md/swagger.md)
+- ### [Tests](./md/testing.md)
+
 ## Installazione
 NestJS comprende una cli (command line interface) facilmente installabile usando `npm`
 
@@ -54,7 +61,6 @@ Se analizzate la struttura noterete che:
 
 Ora guardiamo nel dettaglio il codice: abbiamo aggiunto un modulo, che é una specie di contenitore per alcuni oggetti, in particolare controllers e services. Abbiamo poi creato un controller e un service, e avendo creato il tutto usando la cli sono tutti collegati tra loro.
 Il modulo viene importato automaticamente dalla app generale, e a sua volta carica automaticamente il controller e il service.
-
 ## Controllers
 I controllers sono generalmente utilizzati per gestire l'oggetto request, richiamare i services che invece contengono la logica, generare e restituire una response.
 
@@ -147,7 +153,6 @@ A questo punto basterebbe aggiornare il controller per usare queste due nuove fu
     return this.userService.findById(idVar);
   }
 ```
-
 ## DTO (data transfer object)
 I dto sono delle classi che rappresentano degli oggetti contenenti dei dati. Per descriverli meglio faremo un esempio.
 Diciamo che vogliamo creare un utente, potremmo aggiungere un nuovo endpoint al nostro controller: 
@@ -314,15 +319,8 @@ export class UsersService {
     return newUser;
   }
 }
-
 ```
 
 
 
-## REFS
-- ### [CLI (command line interface)](./md/cli.md)
-- ### [Errors](./md/errors.md)
-- ### [Struttura](./md/struttura.md)
-- ### [Swagger](./md/swagger.md)
- 
 
