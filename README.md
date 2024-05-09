@@ -324,5 +324,6 @@ export class UsersService {
 - ### [Errors](./md/errors.md)
 - ### [Struttura](./md/struttura.md)
 - ### [Swagger](./md/swagger.md)
+- ### [Testing](./md/testing.md)
  
 
