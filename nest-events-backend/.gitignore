@@ -1,7 +1,6 @@
 # compiled output
 /dist
-/oldapp/node_modules
-/nest-events-backend/node_modules
+/node_modules
 
 # Logs
 logs

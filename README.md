@@ -320,6 +320,7 @@ export class UsersService {
 
 
 ## REFS
+- ### [Diario del corso](./md/diario.md)
 - ### [CLI (command line interface)](./md/cli.md)
 - ### [Errors](./md/errors.md)
 - ### [Struttura](./md/struttura.md)

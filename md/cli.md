@@ -1,7 +1,8 @@
 # CLI (command line interface)
 
 ## new
-Semplice :) usanddo la cli appena installata:
+Semplice `:)` usanddo la cli appena installata:
+
 ```bash
 $ nest new test_app
 Which package manager would you ❤️  to use? (Use arrow keys)
