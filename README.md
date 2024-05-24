@@ -55,6 +55,18 @@ Se analizzate la struttura noterete che:
 Ora guardiamo nel dettaglio il codice: abbiamo aggiunto un modulo, che é una specie di contenitore per alcuni oggetti, in particolare controllers e services. Abbiamo poi creato un controller e un service, e avendo creato il tutto usando la cli sono tutti collegati tra loro.
 Il modulo viene importato automaticamente dalla app generale, e a sua volta carica automaticamente il controller e il service.
 
+### @Module decorator
+I moduli vengono creati usando il `@Module` decorator
+```typescript
+@Module({
+  imports: [],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {}
+```
+Puoi trovare maggiori info riguardo questo decorator [qui](https://docs.nestjs.com/modules#feature-modules)
+
 ## Controllers
 I controllers sono generalmente utilizzati per gestire l'oggetto request, richiamare i services che invece contengono la logica, generare e restituire una response.
 
@@ -132,7 +144,7 @@ export class UsersService {
   }
 }
 ```
-A questo punto basterebbe aggiornare il controller per usare queste due nuove funzioni ed il gioco é fatto :)
+A questo punto basterebbe aggiornare il controller per usare queste due nuove funzioni e il gioco é fatto :)
 
 ```typescript
   @Get()
