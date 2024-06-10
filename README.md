@@ -162,7 +162,8 @@ A questo punto basterebbe aggiornare il controller per usare queste due nuove fu
 
 ## DTO (data transfer object)
 I dto sono delle classi che rappresentano degli oggetti contenenti dei dati. Per descriverli meglio faremo un esempio.
-Diciamo che vogliamo creare un utente, potremmo aggiungere un nuovo endpoint al nostro controller: 
+Diciamo che vogliamo creare un utente, potremmo aggiungere un nuovo endpoint al nostro controller:
+
 ```typescript
   // users.controller.ts
   @Post()
@@ -184,7 +185,9 @@ Per questo creeremo un dto che ci permetterà di eliminare le variabili di tipo 
 All'interno della cartella `users` creeremo una nuova cartella `dto` e all'interno un nuovo file e lo chiameremo `create-user.dto.ts`
 ```typescript
 export class CreateUserDto {
-  name: string;
+  username: string;
+  email: string;
+  type?: string;  // se aggiungi un punto interogativo il campo diventa opzionale
 }
 ```
 A questo punto sarà disponibile un nuovo  di variablie che ci permetterà di aggiornare sia il controller che il service:
@@ -194,7 +197,7 @@ A questo punto sarà disponibile un nuovo  di variablie che ci permetterà di ag
 [...]
   @Post()
   newUser(@Body() requestBody: CreateUserDto): any {
-    return this.userService.createUser(requestBody.name);
+    return this.userService.createUser(requestBody.username);
   }
   // users.service.ts
   createUser(name: string) {
@@ -206,7 +209,22 @@ A questo punto sarà disponibile un nuovo  di variablie che ci permetterà di ag
   }
 ```
 
-### Entities
+### Exentend DTO
+Molto spesso i DTO creati per la create sono molto simili a quelli che creiamo per una update ad esempio.
+Se si potesse estendere il DTO si portrebbero avere facilmente due oggetti diversi ma molto simili tra loro e allo stesso 
+tempo si potrebbero estendere le modifiche fatte al DTO padre a tutti i DTO figli.
+Per questo la libreria é perfetta.
+```typescript
+import { CreateUserDto } from './create-user.dto';
+import { PartialType } from '@nestjs/mapped-types';
+
+export class UpdateUserDto extends PartialType(CreateUserDto) {
+  // questa classe é una copia di CreateUserDto ma con tutti i campi opzionali
+}
+```
+Puoi cercare piu info riguardo `@nestjs/mapped-types` [qui](https://docs.nestjs.com/openapi/mapped-types)
+
+## Entities
 Le entities sono delle classi che rappresentano i dati che abbiamo nel database. Anche in questo case le useremo per definire meglio le funzioni che abbiamo appena creato. DTO vengono usati per i dati in entrata, Entities sono usate per le connessioni con il DB.
 Sempre nella cartella `users` creeremo una una nuova cartella `entities` e il file `user.entity.ts`:
 ```typescript

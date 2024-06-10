@@ -23,3 +23,5 @@ connessione ai database e frameworks (Express/Fastify/NestJS).
 9. Introduction to NestJS - Section Intro: Qui spiega come scaricare e far partire una applicazione vue che l'autore del corso ha creato per aiutarci a sviluppare un backend.
 10. Installing and using [NestCLI](cli.md) e [Installazione](../README.md#installazione)
 11. NestJS Project Structure - [Struttura](./struttura.md)
+
+FAst forward 10/06/2024 ho appena finito la sezione 3.

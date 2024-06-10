@@ -1,4 +1,5 @@
 # compiled output
+/node_modules
 /dist
 /oldapp/node_modules
 /nest-events-backend/node_modules
